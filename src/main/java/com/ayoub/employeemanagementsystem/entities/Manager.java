@@ -5,11 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
-@AllArgsConstructor @NoArgsConstructor
-@Table(name = "employees")
-public class Employee {
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "managers")
+public class Manager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +27,6 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
-    private Manager manager;
-
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
+    @OneToMany(mappedBy = "manager")
+    private Set<Employee> employees;
 }
