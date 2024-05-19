@@ -21,6 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 
+
     @Override
     public List<Employee> getAllEmployees() {
 
@@ -52,6 +53,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable= PageRequest.of(pageNo -1,pageSize);
         return this.employeeRepository.findAll(pageable);
+    }
+
+//    @Override
+//    public List<Employee> search(String query) {
+//        // Assuming you want to search by first name or last name
+//        return employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query);
+//    }
+    @Override
+    public List<Employee> searchEmployees(String keyword) {
+        return employeeRepository.findByFirstNameContainingOrLastNameContainingOrEmailContaining(keyword, keyword, keyword);
     }
 
 //    @Override

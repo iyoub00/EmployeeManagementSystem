@@ -12,5 +12,8 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Optional<Employee> findById(SingularAttribute<AbstractPersistable, Serializable> id);
 
-//    List<Employee> findByNameContainingIgnoreCase(String name);
+
+    List<Employee> findByFirstNameContainingOrLastNameContainingOrEmailContaining(String keyword, String keyword1, String keyword2);
+
+//    List<Employee> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String query, String query1);
 }

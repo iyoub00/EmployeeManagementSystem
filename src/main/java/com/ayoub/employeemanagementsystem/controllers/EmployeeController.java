@@ -16,10 +16,23 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+
+//    @GetMapping("/search")
+//    public String searchEmployees(@RequestParam("query") String query, Model model) {
+//        List<Employee> employees = employeeService.search(query); // Implement your search logic in EmployeeService
+//        model.addAttribute("listEmployees", employees);
+//        model.addAttribute("query", query); // Add the query back to the model to display in the form
+//        return "employees"; // Thymeleaf template name for displaying the list of employees
+//    }
     // display list of employees
     @GetMapping("/")
-    public String viewHomePage(Model model) {
-        model.addAttribute("listEmployees", employeeService.getAllEmployees());
+    public String viewHomePage(Model model, @RequestParam(required = false) String keyword) {
+        if (keyword != null) {
+            List<Employee> searchResults = employeeService.searchEmployees(keyword);
+            model.addAttribute("listEmployees", searchResults);
+        } else {
+            model.addAttribute("listEmployees", employeeService.getAllEmployees());
+        }
         return findPaginated(1, "firstName", "asc", model);
     }
 
@@ -52,11 +65,14 @@ public class EmployeeController {
         return "redirect:/";
     }
     @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir, Model model) {
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
         int pageSize = 5;
 
-        Page <Employee> page = employeeService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List <Employee> listEmployees = page.getContent();
+        Page<Employee> page = employeeService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<Employee> listEmployees = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -69,6 +85,7 @@ public class EmployeeController {
         model.addAttribute("listEmployees", listEmployees);
         return "index";
     }
+
 
 
 }

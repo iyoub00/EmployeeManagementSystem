@@ -3,7 +3,11 @@ package com.ayoub.employeemanagementsystem.services;
 import com.ayoub.employeemanagementsystem.entities.Manager;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface ManagerService {
+
+    List<Manager> search(String query);
     Object getAllManagers();
 
     void saveManager(Manager manager);

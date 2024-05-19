@@ -14,4 +14,8 @@ public interface EmployeeService {
 
 //    Employee getEmployeeById(Long Id);
     Page<Employee> findPaginated(int pageNo, int pageSize,String sortField,String sortDirection);
+
+    List<Employee> searchEmployees(String keyword);
+
+    //List<Employee> search(String query);
 }

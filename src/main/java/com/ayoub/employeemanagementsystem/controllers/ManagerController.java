@@ -15,6 +15,13 @@ public class ManagerController {
 
     @Autowired
     private ManagerService managerService;
+    @GetMapping("/managers/search")
+    public String searchManagers(@RequestParam("query") String query, Model model) {
+        List<Manager> managers = managerService.search(query); // Implement your search logic in ManagerService
+        model.addAttribute("listManagers", managers); // Change "managers" to "listManagers" to match the template
+        model.addAttribute("query", query); // Add the query back to the model to display in the form
+        return "managers"; // Return the appropriate view name (e.g., "managers.html")
+    }
 
     @GetMapping("/managers")
     public String viewHomePage(Model model) {

@@ -36,4 +36,10 @@ public class ManagerServiceImpl implements ManagerService{
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
         return managerRepository.findAll(pageable);
     }
+
+    @Override
+    public List<Manager> search(String query) {
+        // Implement your search logic here, e.g., search by first name, last name, or email
+        return managerRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(query, query, query);
+    }
 }
