@@ -26,4 +26,10 @@ public class Department {
     @OneToOne
     @JoinColumn(name = "manager_id")
     private Manager manager;
+
+    public void addEmployee(Employee employee) {
+    }
+
+    public void removeEmployee(Employee employee) {
+    }
 }
