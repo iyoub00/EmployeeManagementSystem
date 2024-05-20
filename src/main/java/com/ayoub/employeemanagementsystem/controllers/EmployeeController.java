@@ -28,6 +28,11 @@ public class EmployeeController {
     @Autowired
     private TeamService teamService;
 
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+
     @GetMapping("/")
     public String viewHomePage(Model model, @RequestParam(required = false) String keyword) {
         if (keyword != null && !keyword.isEmpty()) {
