@@ -18,6 +18,7 @@
         <p><strong>Department:</strong> <span th:text="${employee.department != null ? employee.department.name : ''}"></span></p>
         <p><strong>Team:</strong> <span th:text="${employee.team != null ? employee.team.name : ''}"></span></p>
     </div>
+    <a th:href="@{/}" class="btn btn-primary">Back to Employee List</a>
 </div>
 </body>
 </html>

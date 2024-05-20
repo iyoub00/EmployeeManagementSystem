@@ -3,10 +3,8 @@ package com.ayoub.employeemanagementsystem.controllers;
 import com.ayoub.employeemanagementsystem.entities.Department;
 import com.ayoub.employeemanagementsystem.entities.Employee;
 import com.ayoub.employeemanagementsystem.entities.Manager;
-import com.ayoub.employeemanagementsystem.services.DepartmentService;
-import com.ayoub.employeemanagementsystem.services.EmployeeService;
-import com.ayoub.employeemanagementsystem.services.ManagerService;
-import com.ayoub.employeemanagementsystem.services.ProjectService;
+import com.ayoub.employeemanagementsystem.entities.Team;
+import com.ayoub.employeemanagementsystem.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -27,6 +25,8 @@ public class EmployeeController {
     private DepartmentService departmentService;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private TeamService teamService;
 
     @GetMapping("/")
     public String viewHomePage(Model model, @RequestParam(required = false) String keyword) {
@@ -44,9 +44,11 @@ public class EmployeeController {
         Employee employee = new Employee();
         List<Manager> managers = managerService.getAllManagers();
         List<Department> departments = departmentService.getAllDepartments();
+        List<Team> teams = teamService.getAllTeams();
         model.addAttribute("employee", employee);
         model.addAttribute("managers", managers);
         model.addAttribute("departments", departments);
+        model.addAttribute("teams", teamService.getAllTeams());
 //        model.addAttribute("projects", projectService.getAllProjects());
         return "new_employee";
     }

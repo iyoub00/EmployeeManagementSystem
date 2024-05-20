@@ -24,7 +24,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team getTeamById(long id) {
-        return teamRepository.findById(id).orElse(null);
+        return teamRepository.findById(id).orElseThrow(() -> new RuntimeException("Team not found"));
     }
 
     @Override
@@ -34,11 +34,10 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team updateTeam(long id, Team team) {
-        if (teamRepository.existsById(id)) {
-            team.setId(id);
-            return teamRepository.save(team);
-        }
-        return null;
+        Team existingTeam = getTeamById(id);
+        existingTeam.setName(team.getName());
+        existingTeam.setEmployees(team.getEmployees());
+        return teamRepository.save(existingTeam);
     }
 
     @Override
