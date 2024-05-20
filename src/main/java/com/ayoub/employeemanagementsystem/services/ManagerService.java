@@ -8,7 +8,7 @@ import java.util.List;
 public interface ManagerService {
 
     List<Manager> search(String query);
-    Object getAllManagers();
+    List<Manager> getAllManagers();
 
     void saveManager(Manager manager);
 

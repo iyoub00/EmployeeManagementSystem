@@ -5,14 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "departments")
-public class Department {
+@Table(name = "projects")
+public class Project {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,16 +21,9 @@ public class Department {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "department")
-    private List<Employee> employees;
+    @Column(name = "description")
+    private String description;
 
-    @OneToOne
-    @JoinColumn(name = "manager_id")
-    private Manager manager;
-
-//    public void addEmployee(Employee employee) {
-//    }
-//
-//    public void removeEmployee(Employee employee) {
-//    }
+    @OneToMany(mappedBy = "project")
+    private Set<Task> tasks;
 }

@@ -29,4 +29,7 @@ public class Manager {
 
     @OneToMany(mappedBy = "manager")
     private Set<Employee> employees;
+
+    @OneToOne(mappedBy = "manager")
+    private Department department;
 }

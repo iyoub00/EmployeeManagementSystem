@@ -16,6 +16,7 @@ public class ManagerServiceImpl implements ManagerService{
     @Autowired
     private ManagerRepository managerRepository;
 
+
     public List<Manager> getAllManagers() {
         return managerRepository.findAll();
     }

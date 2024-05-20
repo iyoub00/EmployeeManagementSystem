@@ -1,7 +1,12 @@
 package com.ayoub.employeemanagementsystem.controllers;
 
+import com.ayoub.employeemanagementsystem.entities.Department;
 import com.ayoub.employeemanagementsystem.entities.Employee;
+import com.ayoub.employeemanagementsystem.entities.Manager;
+import com.ayoub.employeemanagementsystem.services.DepartmentService;
 import com.ayoub.employeemanagementsystem.services.EmployeeService;
+import com.ayoub.employeemanagementsystem.services.ManagerService;
+import com.ayoub.employeemanagementsystem.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,15 +21,13 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private ManagerService managerService;
+    @Autowired
+    private DepartmentService departmentService;
+    @Autowired
+    private ProjectService projectService;
 
-//    @GetMapping("/search")
-//    public String searchEmployees(@RequestParam("query") String query, Model model) {
-//        List<Employee> employees = employeeService.search(query); // Implement your search logic in EmployeeService
-//        model.addAttribute("listEmployees", employees);
-//        model.addAttribute("query", query); // Add the query back to the model to display in the form
-//        return "employees"; // Thymeleaf template name for displaying the list of employees
-//    }
-    // display list of employees
     @GetMapping("/")
     public String viewHomePage(Model model, @RequestParam(required = false) String keyword) {
         if (keyword != null) {
@@ -38,32 +41,39 @@ public class EmployeeController {
 
     @GetMapping("/showNewEmployeeForm")
     public String showNewEmployeeForm(Model model) {
-        // create model attribute to bind form data
         Employee employee = new Employee();
+        List<Manager> managers = managerService.getAllManagers();
+        List<Department> departments = departmentService.getAllDepartments();
         model.addAttribute("employee", employee);
+        model.addAttribute("managers", managers);
+        model.addAttribute("departments", departments);
+//        model.addAttribute("projects", projectService.getAllProjects());
         return "new_employee";
     }
 
     @PostMapping("/saveEmployee")
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
-        // save employee to database
         employeeService.saveEmployee(employee);
         return "redirect:/";
     }
 
     @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
-
+    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
-
+        List<Manager> managers = managerService.getAllManagers();
+        List<Department> departments = departmentService.getAllDepartments();
         model.addAttribute("employee", employee);
+        model.addAttribute("managers", managers);
+        model.addAttribute("departments", departments);
         return "update_employee";
     }
+
     @GetMapping("/deleteEmployee/{id}")
-    public String deleteEmployee(@PathVariable (value = "id") long id){
+    public String deleteEmployee(@PathVariable(value = "id") long id) {
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/";
     }
+
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
@@ -85,7 +95,4 @@ public class EmployeeController {
         model.addAttribute("listEmployees", listEmployees);
         return "index";
     }
-
-
-
 }
