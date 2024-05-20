@@ -31,7 +31,7 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public String getDepartmentById(@PathVariable long id, Model model) {
         model.addAttribute("department", departmentService.getDepartmentById(id));
-        return "departments/view";
+        return "department_detail";
     }
 
     @GetMapping("/create")
@@ -74,5 +74,11 @@ public class DepartmentController {
     public String removeEmployeeFromDepartment(@PathVariable long departmentId, @PathVariable long employeeId) {
         departmentService.removeEmployeeFromDepartment(departmentId, employeeId);
         return "redirect:/departments/" + departmentId;
+    }
+    @GetMapping("/detail/{id}")
+    public String showDepartmentDetail(@PathVariable long id, Model model) {
+        Department department = departmentService.getDepartmentById(id);
+        model.addAttribute("department", department);
+        return "departments/department_detail";
     }
 }

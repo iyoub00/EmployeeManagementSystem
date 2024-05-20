@@ -3,7 +3,6 @@ package com.ayoub.employeemanagementsystem.services;
 import com.ayoub.employeemanagementsystem.entities.Employee;
 import com.ayoub.employeemanagementsystem.repositories.EmployeeRepository;
 import com.ayoub.employeemanagementsystem.repositories.ManagerRepository;
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -78,5 +77,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 //        }
 //        return employee;
 //    }
+@Override
+    public List<Employee> searchEmployeesByName(String keyword) {
+    return employeeRepository.findByFirstNameContainingIgnoreCase(keyword);
+}
 
 }

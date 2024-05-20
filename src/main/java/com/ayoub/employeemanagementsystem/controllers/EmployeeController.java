@@ -30,8 +30,8 @@ public class EmployeeController {
 
     @GetMapping("/")
     public String viewHomePage(Model model, @RequestParam(required = false) String keyword) {
-        if (keyword != null) {
-            List<Employee> searchResults = employeeService.searchEmployees(keyword);
+        if (keyword != null && !keyword.isEmpty()) {
+            List<Employee> searchResults = employeeService.searchEmployeesByName(keyword);
             model.addAttribute("listEmployees", searchResults);
         } else {
             model.addAttribute("listEmployees", employeeService.getAllEmployees());
@@ -72,6 +72,12 @@ public class EmployeeController {
     public String deleteEmployee(@PathVariable(value = "id") long id) {
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/";
+    }
+    @GetMapping("/detailEmployee/{id}")
+    public String detailEmployee(@PathVariable(value = "id") long id, Model model) {
+        Employee employee = employeeService.getEmployeeById(id);
+        model.addAttribute("employee", employee);
+        return "employee_detail";
     }
 
     @GetMapping("/page/{pageNo}")

@@ -53,6 +53,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Actions</th>
+            <th>Employees</th>
         </tr>
         </thead>
         <tbody>
@@ -62,6 +63,7 @@
             <td>
                 <a th:href="@{/departments/edit/{id}(id=${department.id})}" class="btn btn-primary">Edit</a>
                 <a th:href="@{/departments/delete/{id}(id=${department.id})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/departments/detail/{id}(id=${department.id})}" class="btn btn-info">Detail</a>
             </td>
         </tr>
         </tbody>

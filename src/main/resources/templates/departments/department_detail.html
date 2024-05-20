@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department Detail</title>
+    <!-- Ajoutez vos liens CSS et scripts JS nécessaires ici -->
+</head>
+<body>
+
+<div class="container my-4">
+    <h1>Department Detail</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2 th:text="${department.name}"></h2>
+            <p>ID: <span th:text="${department.id}"></span></p>
+            <!-- Ajoutez d'autres attributs du département que vous souhaitez afficher ici -->
+
+            <h3>Employees:</h3>
+            <ul>
+                <li th:each="employee : ${department.employees}">
+                    <span th:text="${employee.firstName} + ' ' + ${employee.lastName}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
