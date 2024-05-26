@@ -8,4 +8,5 @@ public interface ProjectService {
     List<Project> getAllProjects();
     Project createProject(Project project);
 
+    Project getProjectById(long id);
 }

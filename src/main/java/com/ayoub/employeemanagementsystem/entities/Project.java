@@ -24,4 +24,7 @@ public class Project {
     @Column(name = "description")
     private String description;
 
+    @OneToMany(mappedBy = "project")
+    private Set<Team> teams;
+
 }

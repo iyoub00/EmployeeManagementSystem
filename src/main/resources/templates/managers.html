@@ -33,6 +33,14 @@
                 <a class="nav-link" th:href="@{/teams}">Teams</a>
             </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+            </li>
+        </ul>
     </div>
 </nav>
 

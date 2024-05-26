@@ -1,6 +1,8 @@
 package com.ayoub.employeemanagementsystem.controllers;
 
+import com.ayoub.employeemanagementsystem.entities.Project;
 import com.ayoub.employeemanagementsystem.entities.Team;
+import com.ayoub.employeemanagementsystem.services.ProjectService;
 import com.ayoub.employeemanagementsystem.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,15 +11,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Controller
 @RequestMapping("/teams")
 public class TeamController {
 
     private final TeamService teamService;
+    private final ProjectService projectService;
 
     @Autowired
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamService teamService, ProjectService projectService) {
+        
         this.teamService = teamService;
+        this.projectService = projectService;
     }
 
     @GetMapping
@@ -38,11 +45,15 @@ public class TeamController {
     @GetMapping("/new")
     public String showCreateTeamForm(Model model) {
         model.addAttribute("team", new Team());
+        List<Project> projects = projectService.getAllProjects();
+        model.addAttribute("projects", projects);
         return "create-team";
     }
 
     @PostMapping
     public String createTeam(@ModelAttribute Team team) {
+        Project project = projectService.getProjectById(team.getProject().getId());
+        team.setProject(project);
         teamService.createTeam(team);
         return "redirect:/teams";
     }

@@ -31,6 +31,14 @@
                 <a class="nav-link active" th:href="@{/teams}">Teams</a>
             </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+            </li>
+        </ul>
     </div>
 </nav>
 
@@ -41,12 +49,14 @@
         <thead>
         <tr>
             <th>Team Name</th>
+            <th>Project</th> <!-- New column for project -->
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="team : ${teams}">
             <td th:text="${team.name}"></td>
+            <td th:text="${team.project != null ? team.project.name : 'N/A'}"></td> <!-- Display project name or 'N/A' if project is not assigned -->
             <td>
                 <a th:href="@{/teams/{id}(id=${team.id})}" class="btn btn-primary">View Details</a>
                 <a th:href="@{/teams/edit/{id}(id=${team.id})}" class="btn btn-secondary">Update</a>

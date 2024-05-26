@@ -47,6 +47,12 @@
         <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="team">Team</label>
+      <select id="team" th:field="*{team.id}" class="form-control col-4">
+        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+      </select>
+    </div>
 
     <button type="submit" class="btn btn-info">Update Employee</button>
   </form>

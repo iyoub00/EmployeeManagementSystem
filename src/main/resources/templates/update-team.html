@@ -14,6 +14,13 @@
             <label for="name">Team Name</label>
             <input type="text" id="name" name="name" class="form-control" th:field="*{name}">
         </div>
+        <div class="form-group">
+            <label for="project">Project</label>
+            <select id="project" name="project" class="form-control">
+                <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}"
+                        th:selected="${project.id == team.project.id}"></option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Save</button>
         <a th:href="@{/teams}" class="btn btn-secondary">Cancel</a>
     </form>

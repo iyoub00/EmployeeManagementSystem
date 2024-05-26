@@ -24,4 +24,8 @@ public class Team {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Employee> employees;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }

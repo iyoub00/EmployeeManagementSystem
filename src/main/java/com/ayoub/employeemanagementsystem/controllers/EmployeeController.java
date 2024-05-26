@@ -36,8 +36,8 @@ public class EmployeeController {
     @GetMapping("/")
     public String viewHomePage(Model model, @RequestParam(required = false) String keyword) {
         if (keyword != null && !keyword.isEmpty()) {
-            List<Employee> searchResults = employeeService.searchEmployeesByName(keyword);
-            model.addAttribute("listEmployees", searchResults);
+//            List<Employee> searchResults = employeeService.searchEmployeesByName(keyword);
+//            model.addAttribute("listEmployees", searchResults);
         } else {
             model.addAttribute("listEmployees", employeeService.getAllEmployees());
         }
@@ -69,9 +69,11 @@ public class EmployeeController {
         Employee employee = employeeService.getEmployeeById(id);
         List<Manager> managers = managerService.getAllManagers();
         List<Department> departments = departmentService.getAllDepartments();
+        List<Team> teams = teamService.getAllTeams();
         model.addAttribute("employee", employee);
         model.addAttribute("managers", managers);
         model.addAttribute("departments", departments);
+        model.addAttribute("teams", teamService.getAllTeams());
         return "update_employee";
     }
 
