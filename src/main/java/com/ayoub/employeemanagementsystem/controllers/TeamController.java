@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Controller
 @RequestMapping("/teams")
 public class TeamController {
@@ -22,7 +20,6 @@ public class TeamController {
 
     @Autowired
     public TeamController(TeamService teamService, ProjectService projectService) {
-        
         this.teamService = teamService;
         this.projectService = projectService;
     }

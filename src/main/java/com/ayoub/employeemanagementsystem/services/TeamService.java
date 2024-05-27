@@ -11,11 +11,7 @@ public interface TeamService {
 
     Team createTeam(Team team);
 
-    //    @Override
-    //    public Team createTeam(Team team) {
-    //        return teamRepository.save(team);
-    //    }
-    Team createTeam(String teamName, Long projectId);
+    Team createTeam(String name, Long projectId);
 
     Team updateTeam(long id, Team team);
 

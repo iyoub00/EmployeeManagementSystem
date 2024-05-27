@@ -11,14 +11,13 @@ import java.util.List;
 
 @Service
 public class TeamServiceImpl implements TeamService {
-    @Autowired
     private final TeamRepository teamRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository, ProjectRepository projectRepository) {
         this.teamRepository = teamRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -33,17 +32,13 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team createTeam(Team team) {
-        return null;
+        return teamRepository.save(team);
     }
 
-    //    @Override
-//    public Team createTeam(Team team) {
-//        return teamRepository.save(team);
-//    }
     @Override
-    public Team createTeam(String name, Long id) {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
+    public Team createTeam(String name, Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
 
         Team team = new Team();
         team.setName(name);

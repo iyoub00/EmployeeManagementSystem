@@ -21,10 +21,13 @@ public class EmployeeController {
 
     @Autowired
     private ManagerService managerService;
+
     @Autowired
     private DepartmentService departmentService;
+
     @Autowired
     private ProjectService projectService;
+
     @Autowired
     private TeamService teamService;
 
@@ -36,8 +39,7 @@ public class EmployeeController {
     @GetMapping("/")
     public String viewHomePage(Model model, @RequestParam(required = false) String keyword) {
         if (keyword != null && !keyword.isEmpty()) {
-//            List<Employee> searchResults = employeeService.searchEmployeesByName(keyword);
-//            model.addAttribute("listEmployees", searchResults);
+            model.addAttribute("listEmployees", employeeService.searchEmployees(keyword));
         } else {
             model.addAttribute("listEmployees", employeeService.getAllEmployees());
         }
@@ -53,8 +55,7 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         model.addAttribute("managers", managers);
         model.addAttribute("departments", departments);
-        model.addAttribute("teams", teamService.getAllTeams());
-//        model.addAttribute("projects", projectService.getAllProjects());
+        model.addAttribute("teams", teams);
         return "new_employee";
     }
 
@@ -73,7 +74,7 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         model.addAttribute("managers", managers);
         model.addAttribute("departments", departments);
-        model.addAttribute("teams", teamService.getAllTeams());
+        model.addAttribute("teams", teams);
         return "update_employee";
     }
 
@@ -82,6 +83,7 @@ public class EmployeeController {
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/";
     }
+
     @GetMapping("/detailEmployee/{id}")
     public String detailEmployee(@PathVariable(value = "id") long id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
